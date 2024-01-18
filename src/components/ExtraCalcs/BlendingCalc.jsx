@@ -1,10 +1,13 @@
 import Title from "../Title";
 import BlendingInputLine from "./BlendingInputLine";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function BlendingCalc() {
   function blend(val1, vol1, val2, vol2) {
-    return (val1 * vol1 + val2 * vol2) / (vol1 + vol2);
+    console.log("blendingCalc", val1, vol1, val2, vol2)
+    let result = ((val1 * vol1) + (val2 * vol2)) / (vol1 + vol2);
+    console.log(result)
+    return result
   }
 
   const [val, setVal] = useState([
@@ -16,12 +19,16 @@ function BlendingCalc() {
     },
   ]);
 
+  useEffect(() => {
+    console.log(val)
+  })
+
   // there is likely an easier way to do this, I imagine destructuring would make the below code cleaner.
   const valObj = val[0];
   const val1Change = (e) => {
     setVal([
       {
-        val1: e.target.value,
+        val1: Number(e.target.value),
         vol1: valObj.vol1,
         val2: valObj.val2,
         vol2: valObj.vol2,
@@ -32,7 +39,7 @@ function BlendingCalc() {
     setVal([
       {
         val1: valObj.val1,
-        vol1: e.target.value,
+        vol1: Number(e.target.value),
         val2: valObj.val2,
         vol2: valObj.vol2,
       },
@@ -42,7 +49,7 @@ function BlendingCalc() {
   const val2Change = (e) => {
     setVal([
       {
-        val2: e.target.value,
+        val2: Number(e.target.value),
         vol2: valObj.vol2,
         val1: valObj.val1,
         vol1: valObj.vol1,
@@ -53,7 +60,7 @@ function BlendingCalc() {
     setVal([
       {
         val2: valObj.val2,
-        vol2: e.target.value,
+        vol2: Number(e.target.value),
         val1: valObj.val1,
         vol1: valObj.vol1,
       },
